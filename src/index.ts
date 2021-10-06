@@ -37,12 +37,16 @@ function setup() {
 
     const track = new Track(points);
 
-    setInterval(() => {
-        track.move(1 / objs.length, (t) => {
-            objs.forEach((obj, i) => {
-                const { x, y } = track.getTrackPosition(t + i / objs.length);
-                obj.position.set(x, y);
-            });
+    const moveObjs = (t: number) => {
+        objs.forEach((obj, i) => {
+            const { x, y } = track.getTrackPosition(t + i / objs.length);
+            obj.position.set(x, y);
         });
+    }
+
+    const lengthBetween = 1 / objs.length;
+
+    setInterval(() => {
+        track.move(lengthBetween, moveObjs);
     }, 2000);
 }
